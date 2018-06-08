@@ -1,0 +1,28 @@
+#!/bin/sh
+
+dir_path=$(dirname $0)
+
+set -x
+
+[ -f ${dir_path}/informix.conf ] && {
+	. ${dir_path}/informix.conf
+	export INFORMIXDIR
+	export INFORMIXSERVER
+	export B_TIMEOUT
+} || {
+	echo "ERROR: unable to find the configuration"
+	exit 1
+}
+
+[ -x ${INFORMIXDIR}/bin/onmode ] || {
+        echo "ERROR: onmode binary not found."
+        exit 1
+} && {
+	${INFORMIXDIR}/bin/onmode -c block $B_TIMEOUT
+	[ $? -ne 0 ] && {
+		echo "ERROR: unable to freeze the databse. Operation failed, might need recovery."
+		exit 1;
+	}
+}
+
+exit 0
