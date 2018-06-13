@@ -18,6 +18,7 @@ cp thaw.xxx thaw.00001
 ```
 
 NOTE: you can find the application ID using ```udsinfo lsapplication -filtervalue apptype="LVM Volume"``` command or by hovering the mouse pointer over the application need to be protected on Actifio Desktop. 
+
 3. Set the informix.conf parameters to match your environment.
 
  - **INFORMIXDIR**: Informix install directory, as per $IFORMIXDIR environment variable.
