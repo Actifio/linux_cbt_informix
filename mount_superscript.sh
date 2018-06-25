@@ -20,7 +20,11 @@ set -x
 
 case $ACT_PHASE in
         post)
-        	mount_point=$(df -P | awk "\$1~/$ACT_JOBNAME/ { print \$6 }")
+        	mount_point=$(mount | awk "\$1~/$ACT_JOBNAME/ { print \$3 }")
+		[ -z $mount_point ] && {
+			echo "Unable to find the mount point!!."
+		}
+
 		[ -d $DB_MOUNT ] || {
 			mkdir -p $DB_MOUNT
 		}
