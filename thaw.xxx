@@ -18,7 +18,7 @@ set -x
         exit 1
 } && {
 	[ $(${INFORMIXDIR}/bin/onstat | awk -F: '$1 == "Blocked" { print $2 }')x == "x" ] && {
-		echo "INFO: DB is already in the unblock mode."
+		echo "INFO: DB is already in the unblock mode. Happy Daze!!!"
 		exit 0
 	} || {
 		${INFORMIXDIR}/bin/onmode -c unblock
@@ -26,6 +26,5 @@ set -x
 			echo "ERROR: unable to freeze the databse. Operation failed, might need recovery."
 			exit 1;
 		}
-	
 } 
 exit 0

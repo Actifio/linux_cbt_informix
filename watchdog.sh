@@ -21,7 +21,7 @@ do
 	sleep 10
 	MAX_FREEZE_TIME=$(expr $MAX_FREEZE_TIME - 10)
 
-	echo "INFO: time remaining to watchdog-release: $MAX_FREEZE_TIME"
+	echo "INFO: time remaining to watchdog-release: $MAX_FREEZE_TIME seconds"
 	
 	[ $(${INFORMIXDIR}/bin/onstat | awk -F: '$1 == "Blocked" { print $2 }')x == "x" ] && {
 		exit 0

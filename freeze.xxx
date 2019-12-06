@@ -21,7 +21,7 @@ set -x
 } && {
 	${INFORMIXDIR}/bin/onmode -c block $B_TIMEOUT
 	[ $? -ne 0 ] && {
-		echo "ERROR: unable to freeze the databse. Operation failed, might need recovery."
+		echo "ERROR: unable to freeze the database. Operation failed, might need recovery."
 		exit 1;
 	} || {
 		echo "INFO: deploy a watchdog. The database block will be released in $MAX_FREEZE_TIME seconds."
