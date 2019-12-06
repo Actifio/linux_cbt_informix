@@ -9,6 +9,7 @@ set -x
 	export INFORMIXDIR
 	export INFORMIXSERVER
 	export B_TIMEOUT
+	export MAX_FREEZE_TIME
 } || {
 	echo "ERROR: unable to find the configuration"
 	exit 1
@@ -22,6 +23,10 @@ set -x
 	[ $? -ne 0 ] && {
 		echo "ERROR: unable to freeze the databse. Operation failed, might need recovery."
 		exit 1;
+	} || {
+		echo "INFO: deploy a watchdog. The database block will be released in $MAX_FREEZE_TIME seconds."
+		${dir_path}/watchdog.sh &
+		exit 0
 	}
 }
 
