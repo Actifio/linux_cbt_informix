@@ -8,6 +8,7 @@ set -x
 	. ${dir_path}/informix.conf
         export INFORMIXDIR
         export INFORMIXSERVER
+				export FAIL_ON_FREEZE_TIMEOUT
 } || {
 	echo "ERROR: unable to find the configuration"
 	exit 1
@@ -18,8 +19,14 @@ set -x
         exit 1
 } && {
 	[ $(${INFORMIXDIR}/bin/onstat | awk -F: '$1 == "Blocked" { print $2 }')x == "x" ] && {
-		echo "INFO: DB is already in the unblock mode. Happy Daze!!!"
-		exit 0
+		echo "WARN: DB is already in the unblock mode. Happy Daze!!!"
+		[ ${FAIL_ON_FREEZE_TIMEOUT}x == "truex" ] && {
+			echo "ERROR: retry the job. Backup is dirty"
+			exit 1
+		} || {
+			echo "WARN: Backup is dirty. Continuing with the dirty backup."
+			exit 0
+		}
 	} || {
 		${INFORMIXDIR}/bin/onmode -c unblock
 		[ $? -ne 0 ] && {
