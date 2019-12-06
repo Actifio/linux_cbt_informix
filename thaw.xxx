@@ -6,9 +6,9 @@ set -x
 
 [ -f ${dir_path}/informix.conf ] && {
 	. ${dir_path}/informix.conf
-        export INFORMIXDIR
-        export INFORMIXSERVER
-				export FAIL_ON_FREEZE_TIMEOUT
+	export INFORMIXDIR
+	export INFORMIXSERVER
+	export FAIL_ON_FREEZE_TIMEOUT
 } || {
 	echo "ERROR: unable to find the configuration"
 	exit 1
