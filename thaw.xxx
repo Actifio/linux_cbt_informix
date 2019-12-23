@@ -33,5 +33,6 @@ set -x
 			echo "ERROR: unable to freeze the databse. Operation failed, might need recovery."
 			exit 1;
 		}
+        }
 } 
 exit 0
