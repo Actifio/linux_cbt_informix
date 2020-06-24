@@ -1,0 +1,23 @@
+#!/bin/sh
+
+dir_path=$(dirname $0)
+
+set -x
+
+[ -f ${dir_path}/informix.conf ] && {
+	. ${dir_path}/informix.conf
+	export INFORMIXDIR
+	export INFORMIXSERVER
+	export B_TIMEOUT
+	export MAX_FREEZE_TIME
+} || {
+	echo "ERROR: unable to find the configuration"
+	exit 1
+}
+
+#time to call quits
+
+[ $(${INFORMIXDIR}/bin/onstat | awk -F: '$1 == "Blocked" { print $2 }')x == "x" ] || {
+	echo "INFO: AbortProcedure : releasing the informix database"
+        ${INFORMIXDIR}/bin/onmode -c unblock
+}
